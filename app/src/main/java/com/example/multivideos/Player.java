@@ -193,9 +193,9 @@ public class Player extends AppCompatActivity {
         exoPlayer.prepare();
         System.out.println("cache= "+isVideoCached(videoUrl));
         exoPlayer.play();
-        System.out.println("cache after= "+isVideoCached(videoUrl));
-        cache=isVideoCached(videoUrl);
 
+        cache=isVideoCached(videoUrl);
+        System.out.println("cache after= "+cache);
         System.out.println("Here");
 
         customerHandler.postDelayed(updateTimeThread,0);
