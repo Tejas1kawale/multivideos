@@ -32,6 +32,8 @@ import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getJsonData() {
-        String URL="http://172.16.26.201:4000/videos";
+        String URL="http://172.16.25.173:4000/videos";
         RequestQueue requestQueue= Volley.newRequestQueue(MainActivity.this);
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
             @Override
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                         Video v = new Video();
                         v.setId(video.getString("id"));
                         v.setName(video.getString("name"));
-                        String url="http://172.16.26.201:4000/video/";
+                        String url="http://172.16.25.173:4000/video/";
                         url=url.concat(video.getString("id"));
 
                         // saving to sqlite db
@@ -107,4 +109,5 @@ public class MainActivity extends AppCompatActivity {
         });
         requestQueue.add(objectRequest);
     }
+
 }
