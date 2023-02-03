@@ -169,8 +169,8 @@ public class Player extends AppCompatActivity {
         LeastRecentlyUsedCacheEvictor lru=new LeastRecentlyUsedCacheEvictor(100 * 1024 * 1024);
         StandaloneDatabaseProvider sdp=new StandaloneDatabaseProvider(getApplicationContext());
         if(simpleCache==null){
-            simpleCache=new SimpleCache(new File(getApplicationContext().getCacheDir(),"EXOPlayer"+v.getId()+"_"+v.getName()),lru,sdp);
-        }
+            simpleCache=new SimpleCache(new File(getCacheDir(),"EXOPlayer"+v.getId()+"_"+v.getName()),lru,sdp);
+       }
 
         DefaultHttpDataSource.Factory dfh=new DefaultHttpDataSource.Factory().
                                           setAllowCrossProtocolRedirects(true);
@@ -232,7 +232,10 @@ public class Player extends AppCompatActivity {
 
                 com.google.android.exoplayer2.Player.Listener.super.onIsLoadingChanged(isLoading);
             }});
-        }
+
+
+
+    }
 
 
 
@@ -334,22 +337,14 @@ public class Player extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == android.R.id.home)
-        {
-            onBackPressed();
-            exoPlayer.stop();
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     private void postJsonData() throws JSONException {
         System.out.println("{json calledddd..........}");
         Date currentTime = Calendar.getInstance().getTime();
         String date1=String.valueOf(currentTime);
         String temp=vname+"       "+date1+"      "+min+":"+secs+":"+milliseconds+"  "+cache;
 
-        String URL="http://172.16.25.173:4000/video/";
+        String URL="http://192.168.0.118:4000/video/";
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         JSONObject json1 =new JSONObject();
         json1.put("tejas",temp);
@@ -396,5 +391,24 @@ public class Player extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        exoPlayer.setPlayWhenReady(false);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        exoPlayer.setPlayWhenReady(true);
+    }
+
+//    @Override
+//    public  void onBackPresses()
+//    {
+//        super.onBackPressed();
+//        setPlayPause(false);
+//        release();
+//        finish();
+//    }
 }
